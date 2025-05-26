@@ -1,34 +1,37 @@
-
-const express = require("express");
-
-
+ const express = require("express");
 const app = express();
 
-//reuest handlestrsa
+app.get("/user", (req, res) => {
+    res.send({firstname:"ankesh" , lastname:"tem"});
+});
 
-
-app.get("/",(req, res)=>{
-
-    res.send("main  page");
-
+app.post("/user",(req,res)=>{
+    res.send("post the user info ");
 });
 
 
-app.get("/hello",(req,res)=>{
+app.delete("/user",(req,res)=>{
+    res.send("delete the user info");
+});
 
+
+app.patch("/user",(req,res)=>{
+    res.send("post the user info ");
+});
+
+
+app.use("/hello", (req, res) => {
     res.send("hello page");
-
 });
 
-
-app.get("/test",(req,res)=>{
-
+app.use("/test", (req, res) => {
     res.send("test page");
-
 });
 
+app.use("/", (req, res) => {
+    res.send("main page page");
+});
 
-
-app.listen(7777,()=>{
-    console.log("server is started ");
+app.listen(7777, () => {
+    console.log("server is started");
 });
