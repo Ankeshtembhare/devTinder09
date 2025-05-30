@@ -1,37 +1,39 @@
  const express = require("express");
-const app = express();
+ const connectDB = require("./config/database");
+ const app = express();
+ const User = require("./models/user");
 
-app.get("/user", (req, res) => {
-    res.send({firstname:"ankesh" , lastname:"tem"});
-});
-
-app.post("/user",(req,res)=>{
-    res.send("post the user info ");
-});
+ app.use(express.json());
 
 
-app.delete("/user",(req,res)=>{
-    res.send("delete the user info");
-});
+ app.post("/signup",async(req,res)=>{
+    //creating new instance of the user model
+    
+    const userdata = new User(req.body);
+
+    try{
+          await userdata.save();
+        res.send("user added succesfully");
+    }
+    catch(err){
+        res.status(400).send("error"+err.message);
+    }
+
+  
+
+ })
 
 
-app.patch("/user",(req,res)=>{
-    res.send("post the user info ");
-});
 
+ connectDB().then(()=>{
+    console.log("db connection established");
 
-app.use("/hello", (req, res) => {
-    res.send("hello page");
-});
-
-app.use("/test", (req, res) => {
-    res.send("test page");
-});
-
-app.use("/", (req, res) => {
-    res.send("main page page");
-});
-
-app.listen(7777, () => {
+    app.listen(7777, () => {
     console.log("server is started");
 });
+})
+.catch(err=>{
+    console.log("db cannot be connected");
+});
+ 
+
