@@ -3,9 +3,13 @@
  const app = express();
  
  const cookieparser = require("cookie-parser");
+ const cors = require("cors");
  
 
-
+ app.use(cors({
+    origin:"http://localhost:5173/login",
+    credentials:true,
+ }));
  app.use(express.json());
  app.use(cookieparser());
 
